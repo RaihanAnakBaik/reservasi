@@ -1,6 +1,12 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+import type { AppProps } from 'next/app';
+import '../styles/globals.css';
+import '../styles/dashboard.css';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-export default function App({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />;
 }
+
+export default MyApp;

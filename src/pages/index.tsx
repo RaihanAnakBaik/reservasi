@@ -1,115 +1,107 @@
 import Image from "next/image";
-import localFont from "next/font/local";
+import { useState } from "react";
+import { useRouter } from 'next/router';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const Home: React.FC = () => {
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-export default function Home() {
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validasi username dan password
+    if (!username || !password) {
+      alert("Username dan password tidak boleh kosong!");
+      return;
+    }
+
+    localStorage.setItem('token', 'dummy-token');
+    router.push('/dashboard');
+  };
+
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <main className="relative min-h-screen bg-blue-300">
+      <div className="absolute top-12 left-12">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+          src="/gabung.svg"
+          alt="Logo KAI dan LRT"
+          width={200}
+          height={80}
+          className="object-contain"
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="flex justify-center items-center min-h-screen px-4">
+        <form
+          onSubmit={handleLogin}
+          className="flex flex-col w-full max-w-md p-12 bg-white rounded-3xl shadow-xl"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <div className="text-center mb-10">
+            <h1 className="text-2xl font-bold text-gray-700 mb-3">
+              Sign in to
+            </h1>
+            <h2 className="text-2xl font-semibold text-gray-700">
+              Reservasi Ruangan
+            </h2>
+          </div>
+
+          <div className="w-full h-0.5 bg-gray-200 mb-10"></div>
+
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label htmlFor="username" className="block text-base font-medium text-gray-700">
+                Username
+              </label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                className="w-full p-3.5 border-2 rounded-lg focus:outline-none focus:border-blue-400 transition-colors"
+                placeholder="Masukkan username"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="password" className="block text-base font-medium text-gray-700">
+                Password
+              </label>
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="w-full p-3.5 border-2 rounded-lg focus:outline-none focus:border-blue-400 transition-colors"
+                placeholder="Masukkan password"
+              />
+            </div>
+
+            <div className="flex items-center">
+              <input
+                id="showPassword"
+                type="checkbox"
+                className="w-4 h-4 text-blue-400 border-2 rounded focus:ring-blue-400"
+                checked={showPassword}
+                onChange={(e) => setShowPassword(e.target.checked)}
+              />
+              <label htmlFor="showPassword" className="ml-3 text-sm text-gray-600">
+                Show Password
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full text-lg bg-blue-400 hover:bg-blue-500 text-white font-semibold py-4 rounded-full transition-colors duration-200 mt-4"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
   );
-}
+};
+
+export default Home;
